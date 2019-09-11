@@ -6,8 +6,10 @@ using UnityEngine.UI;
 public class playerMovement1 : MonoBehaviour
 {
     public float speed;
-    private int score1;
+    public int score1;
     public Text scoreText1;
+    private static float time1;
+    public GameObject player1;
     
     // Start is called before the first frame update
     void Start()
@@ -21,27 +23,42 @@ public class playerMovement1 : MonoBehaviour
     {
         float moveVertical1 = Input.GetAxis("Vertical1");
         transform.Translate(0, moveVertical1 * speed * Time.deltaTime, 0);
+        time1 = timer.time;
+        if (time1 <= 0)
+        {
+            player1.SetActive(false);
+        }
+        
     }
 
     void OnCollisionEnter2D(Collision2D collisionInfo)
     {
         if (collisionInfo.gameObject.tag == "score")
         {
-            transform.position = new Vector2(-3.5f, -3.5f);
             score1 = score1 + 1;
+            SetScoreText1();
+            transform.position = new Vector2(-3.5f, -3.5f);
             Debug.Log(score1);
             
         }
         if (collisionInfo.gameObject.tag == "death")
         {
-            //two second delay???
-            transform.position = new Vector2(-3.5f, -3.5f);
-
+            StartCoroutine(methodName: "player1death");
+            transform.position = new Vector2(-3.5f, 10);
+            Destroy(collisionInfo.gameObject);
         }
+    }
+
+    IEnumerator player1death()
+    {
+        yield return new WaitForSeconds(seconds: 4);
+        transform.position = new Vector2(-3.5f, 3.5f);
     }
 
     void SetScoreText1()
     {
-        scoreText1.text = "" + scoreText1.ToString();
+        scoreText1.text = "" + score1;
     }
+    
+
 }

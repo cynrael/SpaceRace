@@ -10,6 +10,7 @@
           <e p="asteroidMovement.cs" t="Include" />
           <e p="playerMovement1.cs" t="Include" />
           <e p="playerMovement2.cs" t="Include" />
+          <e p="timer.cs" t="Include" />
         </e>
       </e>
       <e p="Library" t="ExcludeRecursive" />
